@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>กฎหมายแห่งแคว้นประจิมนฤเบศ — พุทธศักราช ๒๔๗๕</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+:root{--ink:#29231c;--muted:#776d5d;--paper:#f5efdf;--edge:#cdbf9f;--gold:#9a7940;--dark:#17130f}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 25%,#40372e,#171411 68%);color:var(--ink);font-family:"Kanit",sans-serif}
+body{min-height:100vh}
+.app{min-height:100vh;display:grid;grid-template-columns:290px minmax(0,1fr);transition:grid-template-columns .38s cubic-bezier(.22,.75,.18,1)}
+.app.toc-collapsed{grid-template-columns:0 minmax(0,1fr)}
+.sidebar{background:rgba(18,15,12,.93);color:#eee4d0;border-right:1px solid #544638;padding:25px 18px;overflow:auto;min-width:0;transition:opacity .28s ease,transform .38s cubic-bezier(.22,.75,.18,1),padding .38s ease;z-index:80}
+.app.toc-collapsed .sidebar{opacity:0;transform:translateX(-100%);padding-left:0;padding-right:0;pointer-events:none}
+.toc-toggle{position:fixed;left:12px;top:14px;z-index:100;background:#211c17;color:#fff3d8;border:2px solid #a58247;border-radius:10px;min-width:48px;height:44px;padding:0 12px;font-family:inherit;font-size:18px;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.3);transition:transform .2s,background .2s}
+.toc-toggle:hover{background:#44392d;transform:translateY(-1px)}
+.seal{width:72px;height:72px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;text-align:center;color:#c9a767;font-size:12px;line-height:1.15;margin:0 auto 13px}
+.sidebar h1{font-size:20px;text-align:center;margin:0}
+.year{text-align:center;color:#b8a98f;font-size:13px;margin:4px 0 22px}
+.toc{display:grid;gap:5px}
+.toc-item{width:100%;border:1px solid transparent;background:transparent;color:#ddd1bd;text-align:left;padding:9px 10px;border-radius:5px;cursor:pointer;display:flex;gap:9px;align-items:center;transition:background .2s,border-color .2s,transform .2s}
+.toc-item:hover,.toc-item.active{background:#312a23;border-color:#66533b;transform:translateX(2px)}
+.toc-item span{color:#bfa064;font-size:12px;min-width:72px}
+.toc-item small{font-size:12px}
+.viewer{display:flex;flex-direction:column;align-items:center;padding:16px 25px 28px;min-width:0;position:relative;transition:padding .3s ease}
+.topbar{width:min(1000px,100%);display:flex;justify-content:space-between;color:#cfc1a8;font-size:12px;margin-bottom:12px}
+.book-stage{width:min(1240px,100%);height:min(78vh,840px);min-height:560px;perspective:2800px;display:flex;justify-content:center;align-items:center;position:relative}
+.book{width:min(560px,96%);height:auto;aspect-ratio:2/3;position:relative;transform-style:preserve-3d;filter:drop-shadow(0 24px 34px rgba(0,0,0,.48))}
+.page{position:absolute;inset:0;background:linear-gradient(100deg,#eee4cc 0,#f8f2e3 7%,#f5efdf 100%);border:1px solid #c7b898;padding:42px 48px 52px;overflow:hidden;transform-origin:left center;backface-visibility:hidden;transition:transform .82s cubic-bezier(.22,.75,.18,1),box-shadow .82s,filter .6s;box-shadow:inset 10px 0 22px rgba(74,49,22,.08),0 2px 2px rgba(0,0,0,.05);will-change:transform}
+.page::before{content:"";position:absolute;inset:12px;border:1px solid rgba(119,91,47,.28);pointer-events:none}
+.page::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(75,55,25,.018) 0 1px,transparent 1px 4px);pointer-events:none}
+
+/* Artistic leather book cover */
+.page.cover-page{background:linear-gradient(135deg,#24140d 0%,#4b2b18 24%,#6b3d20 50%,#3b2013 78%,#1d100a 100%);border:3px solid #9a6b32;padding:0;box-shadow:inset 0 0 0 8px rgba(24,12,6,.72),inset 0 0 0 11px rgba(191,143,69,.34),inset 0 0 55px rgba(0,0,0,.58);overflow:hidden;}
+.cover-page::before{content:"";position:absolute;inset:22px;border:1px solid rgba(205,160,84,.58);box-shadow:inset 0 0 0 4px rgba(47,24,12,.45);pointer-events:none;}
+.cover-page::after{content:"";position:absolute;inset:34px;background:linear-gradient(90deg,transparent 0 49%,rgba(215,168,91,.18) 49.5%,transparent 50%,transparent 100%);opacity:.55;pointer-events:none;}
+.cover-art{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#e7c982;padding:70px 55px;z-index:2;font-family:Georgia,"Times New Roman",serif;}
+.cover-ornament{font-size:31px;line-height:1;color:#c99b50;text-shadow:0 2px 4px #140b06;margin:12px 0 24px;letter-spacing:5px;}
+.cover-kicker{font-size:13px;letter-spacing:5px;color:#d5b06c;margin-bottom:16px;}
+.cover-title{font-family:Georgia,"Times New Roman",serif;font-size:28px;line-height:1.35;font-weight:700;letter-spacing:2px;text-shadow:0 3px 5px #170b05;margin:0;}
+.cover-subtitle{font-size:15px;letter-spacing:3px;color:#d9b978;margin-top:18px;}
+.cover-rule{width:62%;height:1px;background:linear-gradient(90deg,transparent,#c99b50,transparent);margin:25px 0;}
+.cover-year{font-size:14px;letter-spacing:4px;color:#d7b878;}
+.cover-seal{width:78px;height:78px;border:2px solid #c99b50;border-radius:50%;display:grid;place-items:center;margin-top:30px;color:#d5ad67;font-size:27px;box-shadow:0 0 0 5px rgba(201,155,80,.12),inset 0 0 18px rgba(0,0,0,.35);}
+.cover-page.flipped{box-shadow:inset -25px 0 40px rgba(0,0,0,.45);}
+.page{transform:rotateY(0deg);opacity:1}
+.page.flipped{transform:rotateY(-180deg);box-shadow:inset -25px 0 40px rgba(0,0,0,.18);filter:brightness(.96)}
+/* บังคับให้ทุกหน้ามีจังหวะพลิกกระดาษแบบเดียวกันตั้งแต่หน้าแรก */
+.page.turning-next{z-index:9999 !important;animation:pageTurnNext .82s cubic-bezier(.22,.75,.18,1) both;box-shadow:inset -25px 0 40px rgba(0,0,0,.18);filter:brightness(.96)}
+.page.turning-prev{z-index:9999 !important;animation:pageTurnPrev .82s cubic-bezier(.22,.75,.18,1) both;box-shadow:inset 10px 0 22px rgba(74,49,22,.08),0 2px 2px rgba(0,0,0,.05);filter:brightness(1)}
+@keyframes pageTurnNext{from{transform:rotateY(0deg)}to{transform:rotateY(-180deg)}}
+@keyframes pageTurnPrev{from{transform:rotateY(-180deg)}to{transform:rotateY(0deg)}}
+@keyframes jumpFlash{0%{opacity:.45;filter:brightness(.8);transform:scale(.985)}55%{opacity:1;filter:brightness(1.06);transform:scale(1.005)}100%{opacity:1;filter:brightness(1);transform:scale(1)}}
+.page.jump-flash{animation:jumpFlash .34s ease-out both;z-index:9999 !important;}
+
+.paper-header,.paper-footer{position:relative;z-index:2;display:flex;justify-content:space-between;color:#786e5d;font-size:10px}
+.paper-header{padding-bottom:10px;border-bottom:1px solid #c4b69a;margin-bottom:20px}
+.paper-footer{position:absolute;left:48px;right:48px;bottom:25px;padding-top:9px;border-top:1px solid #c4b69a}
+.paper-content{position:relative;z-index:2;height:calc(100% - 15px);overflow-y:auto;overflow-x:hidden;padding:0 10px 72px 0;scroll-behavior:smooth;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#a58247 rgba(80,60,35,.12)}
+.paper-content::-webkit-scrollbar{width:8px}
+.paper-content::-webkit-scrollbar-track{background:rgba(80,60,35,.10);border-radius:10px}
+.paper-content::-webkit-scrollbar-thumb{background:#a58247;border-radius:10px;border:2px solid rgba(245,239,223,.75)}
+.paper-content h1{font-size:30px;text-align:center;line-height:1.45;margin:85px 0 8px}
+.paper-content h2{font-size:17px;line-height:1.5;margin:10px 0 3px}
+.chapter{text-align:center;font-size:24px;font-weight:700;margin:8px 0 5px}
+.book-chapter{font-size:27px;letter-spacing:.02em;margin-top:28px;margin-bottom:4px}.book-chapter-title{font-size:19px;margin-bottom:28px}.clause-label{font-weight:800;color:#211b15;display:inline-block;min-width:4.2em}.table-title{margin-top:16px;padding:9px 10px;border:1px solid #b9a47d;border-radius:7px;background:rgba(154,121,64,.10);color:#30261b;font-weight:800}.table-row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr) minmax(0,1fr);gap:10px;align-items:center;font-size:14px;padding:8px 10px;border-bottom:1px solid rgba(105,82,48,.22)}.table-row span{min-width:0}.table-head{font-weight:800;color:#211b15;background:rgba(105,82,48,.10);border-top:1px solid rgba(105,82,48,.28);border-bottom:1px solid rgba(105,82,48,.35)}
+.subtitle{text-align:center;font-size:18px;font-weight:600;margin:0 0 22px}
+.paper-content p{font-size:15px;line-height:1.62;margin:4px 0}
+.indent{text-indent:2.3em}
+.penalty{font-weight:700;color:#682e27;margin-left:2em!important}
+.list{margin-left:2em!important}
+.special{font-size:15px;line-height:1.62;margin:8px 0;font-weight:600}
+.table-row{font-size:15px;padding:5px 8px;border-bottom:1px solid rgba(105,82,48,.22)}
+.controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:10px;width:min(500px,96%);position:relative;z-index:50}
+.nav{background:#211c17;color:#fff3d8;border:2px solid #a58247;padding:13px 24px;border-radius:10px;cursor:pointer;min-width:190px;min-height:52px;font-family:inherit;font-size:15px;font-weight:600;box-shadow:0 8px 18px rgba(0,0,0,.28);transition:background .2s,transform .2s,box-shadow .2s}
+.nav:hover{background:#44392d;transform:translateY(-1px)}
+.nav:disabled{opacity:.3;cursor:not-allowed;transform:none}
+.progress{width:min(500px,96%);height:5px;background:#3b332b;border-radius:99px;margin-top:12px;overflow:hidden}
+.progress i{display:block;height:100%;background:#a58247;transition:width .5s}
+.hint{font-size:12px;color:#8f826e;margin-top:8px}
+.jump-flash{animation:paperLift .38s ease-out}
+@keyframes paperLift{0%{transform:translateX(8px) scale(.985);filter:brightness(.94)}100%{transform:translateX(0) scale(1);filter:brightness(1)}}
+@media(max-width:850px){.app{display:block}.sidebar{position:fixed;left:0;top:0;bottom:0;width:min(320px,88vw);display:block;box-shadow:16px 0 40px rgba(0,0,0,.45)}.app.toc-collapsed .sidebar{display:block}.viewer{padding:10px 5px 24px}.book-stage{min-height:500px;height:67vh}.book{width:min(560px,96%);aspect-ratio:2/3}.page{padding:34px 34px 46px}.paper-footer{left:34px;right:34px}.paper-content p,.table-row{font-size:14px;line-height:1.58}.table-row{gap:7px;padding:7px 6px}.paper-content h2{font-size:16px}.chapter{font-size:22px}.subtitle{font-size:17px}.controls{gap:10px;width:min(500px,96%)}.nav{min-width:0;flex:1;padding:12px 10px;font-size:14px}.progress{width:min(500px,96%)}}
+
+/* Text protection */
+.book, .book * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+<button class="toc-toggle" id="tocToggle" aria-label="เปิดหรือปิดสารบัญ" title="เปิด/ปิดสารบัญ">☰</button>
+<aside class="sidebar">
+<div class="seal">แคว้น<br>ประจิม<br>นฤเบศ</div>
+<h1>กฎหมายแห่งแคว้น</h1><div class="year">พุทธศักราช ๒๔๗๕</div>
+<nav class="toc">
+<button class="toc-item" data-page="3"><span>หมวดที่ ๑</span><small>บททั่วไป</small></button>
+<button class="toc-item" data-page="4"><span>หมวดที่ ๒</span><small>ว่าด้วยสิทธิและหน้าที่ของราษฎร</small></button>
+<button class="toc-item" data-page="5"><span>หมวดที่ ๓</span><small>ว่าด้วยความสงบเรียบร้อย</small></button>
+<button class="toc-item" data-page="6"><span>หมวดที่ ๔</span><small>ว่าด้วยอาวุธ</small></button>
+<button class="toc-item" data-page="7"><span>หมวดที่ ๕</span><small>ว่าด้วยทรัพย์สินและการลักทรัพย์</small></button>
+<button class="toc-item" data-page="8"><span>หมวดที่ ๖</span><small>ว่าด้วยการค้าและกิจการ</small></button>
+<button class="toc-item" data-page="9"><span>หมวดที่ ๗</span><small>ว่าด้วยการประมูลกิจการ</small></button>
+<button class="toc-item" data-page="10"><span>หมวดที่ ๘</span><small>ว่าด้วยการเดินทางและเขตแดน</small></button>
+<button class="toc-item" data-page="11"><span>หมวดที่ ๙</span><small>ว่าด้วยการล่าสัตว์และทรัพยากรธรรมชาติ</small></button>
+<button class="toc-item" data-page="12"><span>หมวดที่ ๑๐</span><small>ว่าด้วยเจ้าหน้าที่และอำนาจแห่งทางการ</small></button>
+<button class="toc-item" data-page="13"><span>หมวดที่ ๑๑</span><small>ว่าด้วยการจับกุม การจำคุก และการส่งตัวไปทัณฑสถาน</small></button>
+<button class="toc-item" data-page="15"><span>หมวดที่ ๑๒</span><small>บทสุดท้าย</small></button>
+<button class="toc-item" data-page="16"><span>บัญชีอัตราโทษ</span><small>อัตราโทษโดยสังเขป</small></button>
+<button class="toc-item" data-page="17"><span>ลงชื่อ</span><small>ประกาศและพระบัญชา</small></button>
+</nav>
+</aside>
+<main class="viewer">
+<div class="topbar"><div class="crumb">ราชกิจจานุเบกษาแห่งแคว้นประจิมนฤเบศ</div><div class="counter" id="counter">หน้า ๑ / 16</div></div>
+<div class="book-stage"><div class="book" id="book"><article class="page cover-page" data-index="0">
+  <div class="cover-art">
+    <div class="cover-kicker">ราชกิจจานุเบกษาแห่งแคว้นประจิมนฤเบศ</div>
+    <div class="cover-ornament">❦</div>
+    <h1 class="cover-title">ประมวลกฎหมาย<br>แห่งแคว้นประจิมนฤเบศ</h1>
+    <div class="cover-rule"></div>
+    <div class="cover-subtitle">ฉบับพระบัญชาแห่งเจ้าแคว้น</div>
+    <div class="cover-year">พุทธศักราช ๒๔๗๕</div>
+    <div class="cover-seal">นฤ</div>
+    <div class="cover-ornament">❧</div>
+  </div>
+</article><article class="page" data-index="0">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><h1>กฎหมายแห่งแคว้นประจิมนฤเบศ</h1>
+<p>พุทธศักราช ๒๔๗๕</p>
+<p>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</p>
+<p>เพื่อรักษาความสงบเรียบร้อย ความปลอดภัยในชีวิตและทรัพย์สินของราษฎร ตลอดจนวางระเบียบการปกครอง การค้าขาย และการดำรงอยู่ร่วมกันของประชาชนภายในแคว้นประจิมนฤเบศ จึงตรากฎหมายฉบับนี้ขึ้น ให้ใช้บังคับแก่ราษฎร พ่อค้า คหบดีผู้เดินทาง และบุคคลทั้งหลายซึ่งอยู่ภายในเขตแคว้นโดยทั่วกัน</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 1 —</span></div>
+</article><article class="page" data-index="1">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter book-chapter">บทที่ ๑</div>
+<div class="subtitle book-chapter-title">คำอธิบายกฎหมายแห่งแคว้นประจิมนฤเบศ</div>
+<div class="chapter">หมวดที่ ๑</div>
+<div class="subtitle">บททั่วไป</div><h2>มาตรา ๑ — ว่าด้วยเรื่องการทำตามกฎหมายแห่งแคว้น</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> กฎหมายแห่งแคว้นประจิมนฤเบศนี้ ให้ใช้บังคับแก่บุคคลทั้งหลายซึ่งอยู่ภายในเขตแดนของแคว้น ไม่ว่าผู้นั้นจะเป็นราษฎรแห่งแคว้นหรือเป็นผู้เดินทางเข้ามาเป็นการชั่วคราว</p>
+<h2>มาตรา ๒</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> บุคคลทั้งหลายย่อมมีหน้าที่เคารพกฎหมาย คำสั่งของทางการ และคำสั่งอันชอบด้วยอำนาจของเจ้าหน้าที่แห่งแคว้น</p>
+<h2>มาตรา ๓</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> การอ้างว่าไม่รู้กฎหมาย มิให้ถือเป็นเหตุให้พ้นจากความรับผิดตามกฎหมายนี้</p>
+<h2>มาตรา ๔</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> การปฏิบัติหน้าที่ของเจ้าหน้าที่ต้องกระทำโดยมีเหตุอันสมควร และอยู่ภายในขอบเขตแห่งอำนาจที่ตนได้รับ</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 2 —</span></div>
+</article><article class="page" data-index="2">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๒</div>
+<div class="subtitle">ว่าด้วยสิทธิและหน้าที่ของราษฎร</div><h2>มาตรา ๕</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ราษฎรย่อมมีสิทธิในการดำรงชีวิต ประกอบอาชีพ ซื้อขายทรัพย์สิน และเดินทางภายในแคว้นโดยสุจริต ทั้งนี้ต้องไม่ขัดต่อกฎหมาย</p>
+<h2>มาตรา ๖</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ราษฎรมีหน้าที่ให้ความร่วมมือแก่เจ้าหน้าที่เมื่อมีเหตุอันเกี่ยวเนื่องกับความปลอดภัยของบ้านเมือง</p>
+<h2>มาตรา ๗ — การให้ถ้อยคำอันเป็นเท็จ</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดให้ถ้อยคำอันเป็นเท็จต่อเจ้าหน้าที่โดยเจตนา เพื่อปกปิดความผิดหรือช่วยเหลือผู้กระทำความผิด ผู้นั้นย่อมมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๓๐๐ บาท หรือจำคุก ๕ นาที</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 3 —</span></div>
+</article><article class="page" data-index="3">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๓</div>
+<div class="subtitle">ว่าด้วยความสงบเรียบร้อย</div><h2>มาตรา ๘ — การก่อเหตุทะเลาะวิวาท</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดก่อเหตุทะเลาะวิวาท ส่งเสียงอื้ออึง ก่อความวุ่นวาย หรือใช้อำนาจข่มขู่บุคคลอื่นในที่สาธารณะ อันเป็นเหตุให้เกิดความเดือดร้อนแก่ประชาชน ผู้นั้นมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๑๐๐ บาท หรือจำคุก ๕ นาที</p>
+<h2>มาตรา ๙ — การทำร้ายร่างกาย</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดทำร้ายร่างกายผู้อื่นโดยเจตนา ผู้นั้นมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๕๐๐ บาท และจำคุก ๑๐ นาที</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> หากการกระทำนั้นเป็นเหตุให้ผู้ถูกทำร้ายได้รับบาดเจ็บร้ายแรง</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๑,๐๐๐ บาท และจำคุก ๓๐ นาที</p>
+<h2>มาตรา ๑๐ — การฆ่าผู้อื่น CK</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดฆ่าบุคคลอื่นโดยเจตนา ให้ถือเป็นความผิดร้ายแรงแห่งแคว้น</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๓,๐๐๐ บาท และจำคุก ๖๐ นาที</p>
+<h2>มาตรา ๑๑ — การป้องกันตน</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> การกระทำเพื่อป้องกันตนเองหรือผู้อื่นจากอันตรายอันใกล้จะถึง อาจไม่ถือเป็นความผิด หากการกระทำนั้นสมควรแก่เหตุ และกระทำเพียงเท่าที่จำเป็น</p>
+<p>หากการป้องกันเกินสมควรแก่เหตุ ให้ทางการพิจารณาตามพฤติการณ์แห่งคดี</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 4 —</span></div>
+</article><article class="page" data-index="4">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๔</div>
+<div class="subtitle">ว่าด้วยอาวุธ</div><h2>มาตรา ๑๒ — การพกพาอาวุธ</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> บุคคลผู้ประสงค์จะพกพาหรือใช้อาวุธภายในเขตชุมชน ต้องปฏิบัติตามกฎหมายและข้อกำหนดของทางการ</p>
+<h2>มาตรา ๑๓ — การข่มขู่ด้วยอาวุธ</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดชักอาวุธ ข่มขู่ หรือเล็งอาวุธใส่บุคคลอื่นโดยไม่มีเหตุอันสมควร ผู้นั้นมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๕๐๐ บาท และจำคุก ๑๐ นาที</p>
+<h2>มาตรา ๑๔ — การยิงอาวุธโดยไม่มีเหตุ</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดยิงอาวุธภายในเขตชุมชนโดยไม่มีเหตุจำเป็นหรือไม่มีคำสั่งจากเจ้าหน้าที่ผู้นั้นมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๕๐๐ บาท และจำคุก ๑๐ นาที</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> หากการยิงดังกล่าวทำให้ผู้อื่นได้รับบาดเจ็บหรือเสียชีวิต ให้พิจารณาโทษตามมาตราว่าด้วยการทำร้ายร่างกายหรือฆ่าผู้อื่น แล้วแต่กรณี</p>
+<h2>มาตรา ๑๕ — การยึดอาวุธ</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> เจ้าหน้าที่มีอำนาจยึดอาวุธที่ใช้ในการกระทำความผิดไว้เป็นของกลาง และอาจสั่งเพิกถอนใบอนุญาตตามสมควรแก่กรณี</p>
+<p>(/me ยึดอาวุธผู้ต้องหา แล้วให้ผู้ต้องหาแจ้งหมายเลข license ของปืน แล้วเจ้าหน้าที่จดเอาไว้ )</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 5 —</span></div>
+</article><article class="page" data-index="5">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๕</div>
+<div class="subtitle">ว่าด้วยทรัพย์สินและการลักทรัพย์</div><h2>มาตรา ๑๖ — การลักทรัพย์</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดเอาทรัพย์ของผู้อื่นไปโดยทุจริต โดยเจ้าของมิได้ยินยอม ผู้นั้นมีความผิดฐานลักทรัพย์</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๕๐๐ บาท และจำคุก ๑๐ นาที และ คืนทรัพย์ที่ถูกขโมยแก่เหยื่อ</p>
+<h2>มาตรา ๑๗ — การทำลายทรัพย์สิน</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดทำลาย ทำให้เสียหาย หรือทำให้ทรัพย์สินของผู้อื่นเสื่อมค่าโดยเจตนา ผู้นั้นมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๑๐๐ บาท หรือจำคุก ๕ นาที</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> หากความเสียหายมีมูลค่าสูงหรือเป็นการกระทำโดยเจตนาร้ายแรง</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๕๐๐ บาท และจำคุก ๑๐ นาที</p>
+<h2>มาตรา ๑๘ — การรับหรือซ่อนทรัพย์สินอันได้มาโดยผิดกฎหมาย</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดรับ เก็บรักษา ซ่อนเร้น หรือช่วยปกปิดทรัพย์สินซึ่งตนรู้หรือควรรู้ว่าได้มาจากการกระทำความผิด ผู้นั้นมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๕๐๐ บาท และจำคุก ๑๐ นาที</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 6 —</span></div>
+</article><article class="page" data-index="6">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๖</div>
+<div class="subtitle">ว่าด้วยการค้าและกิจการ</div><h2>มาตรา ๑๙</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> บุคคลผู้ประสงค์จะประกอบกิจการค้าในเขตแคว้น ต้องได้รับสิทธิหรือใบอนุญาตตามประเภทกิจการที่ทางการกำหนด</p>
+<h2>มาตรา ๒๐</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> กิจการซึ่งทางการเปิดให้เช่าสิทธิประกอบกิจการ ให้ถือว่าสิทธิแห่งกิจการนั้นเป็น สิทธิในการเช่าประกอบกิจการ มิใช่กรรมสิทธิ์ถาวรในกิจการหรือสถานที่</p>
+<h2>มาตรา ๒๑</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ถือสิทธิ์ประกอบกิจการไม่มีอำนาจผูกขาดงาน การค้า หรือบริการใดแก่ตนแต่เพียงผู้เดียว เว้นแต่ทางการจะได้ประกาศกำหนดไว้เป็นกรณีเฉพาะ</p>
+<h2>มาตรา ๒๒</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> สัญญาเช่ากิจการให้เป็นไปตามระยะเวลาและเงื่อนไขที่ทางการกำหนด เมื่อครบกำหนดสัญญา ให้ถือว่าสิทธิ์นั้นสิ้นสุดลง และทางการอาจนำกิจการดังกล่าวออกประมูลใหม่</p>
+<h2>มาตรา ๒๓</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ประกอบกิจการมีหน้าที่ชำระภาษีอาคาร ค่าธรรมเนียม หรือค่าใช้จ่ายอื่นตามที่ทางการกำหนด</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> ผู้ใดจงใจหลีกเลี่ยงหรือค้างชำระเป็นเวลานาน ทางการอาจสั่งระงับหรือเพิกถอนสิทธิ์ประกอบกิจการได้</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 7 —</span></div>
+</article><article class="page" data-index="7">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๗</div>
+<div class="subtitle">ว่าด้วยการประมูลกิจการ</div><h2>มาตรา ๒๕</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ชนะการประมูลจะได้รับสิทธิ์เช่ากิจการตามระยะเวลาที่กำหนดในประกาศประมูล มิให้ถือว่าผู้นั้นได้รับกรรมสิทธิ์ในกิจการนั้นเป็นการถาวร</p>
+<h2>มาตรา ๒๖ — การทุจริตในการประมูล</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ห้ามมิให้ผู้เข้าร่วมประมูลสมคบกัน กดราคา ตกลงราคา หรือกระทำการใดเพื่อบิดเบือนผลแห่งการประมูล</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๑,๐๐๐ บาท และจำคุก ๑๐ นาที</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> ทางการมีอำนาจเพิกถอนสิทธิ์การประมูล และริบเงินหรือหลักประกันตามเงื่อนไขที่ประกาศไว้</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 8 —</span></div>
+</article><article class="page" data-index="8">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๘</div>
+<div class="subtitle">ว่าด้วยการเดินทางและเขตแดน</div><h2>มาตรา ๒๘ — การนำสิ่งของต้องห้ามเข้าแคว้น</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดนำสิ่งของต้องห้าม ของผิดกฎหมาย หรือสิ่งอันอาจก่อให้เกิดอันตรายร้ายแรงเข้าสู่แคว้นโดยมิได้รับอนุญาต ผู้นั้นมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๑,๐๐๐ บาท และจำคุก ๑๐ นาที</p>
+<h2>มาตรา ๒๙</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> เจ้าหน้าที่มีอำนาจตรวจค้นบุคคลหรือสัมภาระเมื่อมีเหตุอันควรสงสัยว่ามีการกระทำผิดกฎหมาย ทั้งนี้ต้องกระทำโดยสุจริต และเท่าที่จำเป็น</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 9 —</span></div>
+</article><article class="page" data-index="9">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๙</div>
+<div class="subtitle">ว่าด้วยการล่าสัตว์และทรัพยากรธรรมชาติ</div><h2>มาตรา ๓๐</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> การล่าสัตว์ในเขตแคว้นต้องกระทำตามฤดูกาล เขตพื้นที่ และข้อกำหนดของทางการ</p>
+<h2>มาตรา ๓๑ — การล่าสัตว์ในเขตหวงห้าม</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดล่าสัตว์ในเขตหวงห้าม เขตชุมชน หรือพื้นที่ซึ่งทางการประกาศเป็นเขตอนุรักษ์ โดยมิได้รับอนุญาต ผู้นั้นมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๑๐๐ บาท หรือจำคุก ๕ นาที</p>
+<h2>มาตรา ๓๒</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดล่าสัตว์โดยฝ่าฝืนข้อกำหนด หรือกระทำการอันก่อให้เกิดความเสียหายอย่างร้ายแรงต่อทรัพยากรของแคว้น</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๕๐๐ บาท และจำคุก ๑๐ นาที</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 10 —</span></div>
+</article><article class="page" data-index="10">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๑๐</div>
+<div class="subtitle">ว่าด้วยเจ้าหน้าที่และอำนาจแห่งทางการ</div><h2>มาตรา ๓๓</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> เจ้าหน้าที่ผู้ได้รับแต่งตั้งโดยชอบ มีหน้าที่รักษาความสงบ บังคับใช้กฎหมาย และคุ้มครองชีวิตและทรัพย์สินของราษฎร</p>
+<h2>มาตรา ๓๔ — การใช้อำนาจโดยมิชอบ</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> เจ้าหน้าที่ผู้ใช้อำนาจเกินขอบเขต หรือใช้อำนาจเพื่อประโยชน์ส่วนตน ย่อมมีความผิด</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๕๐๐ บาท หรือจำคุก ๑๐ นาที และอาจถูกเพิกถอนอำนาจหน้าที่</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> หากเป็นการใช้อำนาจโดยมิชอบจนก่อให้เกิดความเสียหายร้ายแรง</p>
+<p class="penalty">โทษ: ปรับไม่เกิน ๑,๐๐๐ บาท และจำคุก ๓๐ นาที</p>
+<h2>มาตรา ๓๕</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> คำสั่งของเจ้าหน้าที่อันเกี่ยวกับความสงบเรียบร้อย ให้ราษฎรปฏิบัติตาม เว้นแต่คำสั่งนั้นขัดต่อกฎหมายแห่งแคว้น</p>
+<h2>มาตรา ๓๖</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> เจ้าแคว้นประจิมนฤเบศมีอำนาจออกประกาศ คำสั่ง หรือกฎเพิ่มเติม เพื่อรักษาความสงบและความเหมาะสมแก่สถานการณ์ของแคว้น โดยประกาศดังกล่าวต้องไม่ขัดต่อกฎหมายแห่งแคว้น</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 11 —</span></div>
+</article><article class="page" data-index="11">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๑๑</div>
+<div class="subtitle">ว่าด้วยการจับกุม การจำคุก และการส่งตัวไปทัณฑสถาน</div><h2>มาตรา ๓๗</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> บุคคลผู้ถูกกล่าวหาว่ากระทำความผิด ต้องได้รับการแจ้งเหตุแห่งการจับกุม และให้โอกาสชี้แจงตามสมควร</p>
+<h2>มาตรา ๓๘</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> การลงโทษให้พิจารณาตามความร้ายแรงแห่งความผิด พฤติการณ์แห่งการกระทำ และความเสียหายที่เกิดขึ้น</p>
+<h2>มาตรา ๓๙</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> โทษตามกฎหมายแห่งแคว้นอาจประกอบด้วย</p>
+<h2>มาตรา ๓๙ — รายการโทษตามกฎหมายแห่งแคว้น</h2>
+<p class="list">๑. การตักเตือน</p>
+<p class="list">๒. การปรับ</p>
+<p class="list">๓. การจำคุกตามเวลา</p>
+<p class="list">๔. การริบทรัพย์หรือของกลาง</p>
+<p class="list">๕. การเพิกถอนใบอนุญาต</p>
+<p class="list">๖. การเพิกถอนสิทธิ์ประกอบกิจการ</p>
+<p class="list">๗. การห้ามเข้าพื้นที่หรือเมืองเป็นการชั่วคราวตามคำสั่งของทางการ</p>
+<p class="list">๘. การส่งตัวไปทัณฑสถาน</p>
+<h2>มาตรา ๔๐ — การส่งตัวไปทัณฑสถาน</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ผู้ใดได้รับโทษจำคุก เกิน ๖๐ นาทีขึ้นไป ให้ถือเป็นโทษจำคุกระยะยาว และให้เจ้าหน้าที่ดำเนินการส่งตัวผู้ต้องโทษไปยังทัณฑสถานแห่งแคว้นเลิศมงคล เพื่อรับโทษตามระยะเวลาที่ศาลหรือทางการกำหนด</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> การส่งตัวไปทัณฑสถานให้กระทำในกรณีที่มีโทษจำคุกเกินหนึ่งชั่วโมง หรือกรณีที่ทางการมีคำสั่งให้รับโทษ ณ ทัณฑสถานโดยเฉพาะ</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 12 —</span></div>
+</article>
+<article class="page" data-index="12">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๑๑</div>
+<div class="subtitle">ว่าด้วยการจับกุม การจำคุก และการส่งตัวไปทัณฑสถาน</div>
+<h2>มาตรา ๔๑ — การกำหนดโทษจำคุกระยะยาว</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ในกรณีความผิดที่มีความร้ายแรงเป็นพิเศษ หรือมีเหตุให้ต้องลงโทษเกินกว่า ๖๐ นาที ทางการอาจกำหนดให้ผู้กระทำความผิดรับโทษ ณ ทัณฑสถานแทนการควบคุมตัวภายในเมือง</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> การกำหนดโทษให้พิจารณาจากความร้ายแรง ความเสียหาย พฤติการณ์แห่งคดี และประวัติการกระทำความผิดของผู้ต้องโทษ</p>
+<h2>มาตรา ๔๒ — การลดหรือบรรเทาโทษ</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> หากผู้กระทำความผิดให้การเป็นประโยชน์ ยอมรับผิด ชดใช้ความเสียหาย หรือมีเหตุอันควรแก่การบรรเทาโทษ ทางการอาจพิจารณาลดโทษจำคุกหรือค่าปรับลงได้ตามสมควร</p>
+<h2>มาตรา ๔๓ — ว่าด้วยเรื่องการต้องโทษและการนับอายุความใหม่</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> ในกรณีความผิดร้ายแรงซึ่งอาจกระทบต่อความมั่นคงหรือความสงบของแคว้น ให้เจ้าหน้าที่นำตัวผู้ต้องหาเข้าสู่กระบวนการพิจารณาของทางการโดยเร็ว</p>
+<p class="indent"><span class="clause-label">วรรค ๒</span> ความผิดร้ายแรงอาจมีโทษจำคุกตั้งแต่๓๐ นาทีถึง ๖๐ นาที และหากมีเหตุอันควร อาจกำหนดโทษเกินกว่า ๖๐ นาทีและส่งตัวไปทัณฑสถานได้</p>
+<p class="indent"><span class="clause-label">วรรค ๓</span> กรณีย์ผู้ต้องโทษแหกคุก ออกมาหากเป็นคุกปกติ จะถือเป็น ความผิดร้ายแรง ถึง ความผิดร้ายแรงมาก และหากแหกคุก “ทัณฑสถาน” จะถือเป็น ความผิดร้ายแรงเป็นพิเศษ ซึ่งจะถูกต้องคดีใหม่และจัดเป็น อายุความของคดีใหม่ทันที</p>
+<p class="indent"><span class="clause-label">วรรค ๔</span> กรณีย์แหกคุกปกติและจับกุมได้จะถูกต้องโทษที่ “ทัณฑสถาน” ไม่เกิน ๖๐ นาที และหากแหกคุก “ทัณฑสถาน” จะถูกต้องโทษที่ “ทัณฑสถาน” ไม่เกิน ๙๐ นาที เช่นกัน</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 13 —</span></div>
+</article>
+<article class="page" data-index="12">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="chapter">หมวดที่ ๑๒</div>
+<div class="subtitle">บทสุดท้าย</div><h2>มาตรา ๔๔ — ว่าด้วยเรื่องการเคารพกฎเกณตุแห่งแคว้น</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> บรรดาประกาศ กฎ คำสั่ง หรือข้อบังคับของเมืองต่าง ๆ ภายในแคว้นประจิมนฤเบศ ให้ใช้บังคับได้ตราบเท่าที่มิได้ขัดหรือแย้งกับกฎหมายแห่งแคว้นนี้</p>
+<h2>มาตรา ๔๕</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> เมื่อมีข้อสงสัยเกี่ยวกับการตีความกฎหมายฉบับนี้ ให้ทางการแห่งแคว้นเป็นผู้วินิจฉัย และคำวินิจฉัยดังกล่าวให้ถือเป็นแนวทางในการปฏิบัติของเจ้าหน้าที่</p>
+<h2>มาตรา ๔๖</h2>
+<p class="indent"><span class="clause-label">วรรค ๑</span> กฎหมายฉบับนี้ให้มีผลใช้บังคับตั้งแต่วันที่ประกาศเป็นต้นไป</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 13 —</span></div>
+</article><article class="page" data-index="14">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><div class="special">บัญชีอัตราโทษโดยสังเขป</div>
+<div class="special">🟢 ความผิดเล็กน้อย</div>
+<p>ค่าปรับ ๕๐–๑๐๐ บาท</p>
+<p>หรือจำคุก ๕ นาที</p>
+<p>ตัวอย่างเช่น การก่อความวุ่นวายเล็กน้อย การฝ่าฝืนข้อกำหนดทั่วไป หรือความผิดที่ก่อให้เกิดความเสียหายเพียงเล็กน้อย</p>
+<div class="special">🟡 ความผิดทั่วไป</div>
+<p>ค่าปรับ ๑๐๐–๕๐๐ บาท</p>
+<p>จำคุก ๕–๑๐ นาที</p>
+<div class="special">🟠 ความผิดร้ายแรง</div>
+<p>ค่าปรับ ๕๐๐–๑,๐๐๐ บาท</p>
+<p>จำคุก ๑๐–๓๐ นาที</p>
+<div class="special">🔴 ความผิดร้ายแรงมาก</div>
+<p>ค่าปรับ ๑,๐๐๐–๓,๐๐๐ บาท</p>
+<p>จำคุก ๓๐–๖๐ นาที</p>
+<div class="special">⚫ ความผิดร้ายแรงเป็นพิเศษ</div>
+<p>ค่าปรับ ๓,๐๐๐–๕,๐๐๐ บาท</p>
+<p>จำคุก เกิน ๖๐ นาที</p>
+<p>และให้ส่งตัวไป ทัณฑสถานแห่งแคว้นประจิมนฤเบศ</p>
+<div class="special">ระบบอายุความ (จัดเป็นระบบ ชั่วยาม ประเทศ / ชั่วยาม สยาม)</div>
+<div class="special">🟡ความผิดทั่วไป : 2 ชั่วยาม ประเทศ</div>
+<div class="special">🟠ความผิดร้ายแรง : 3 ชั่วยาม ประเทศ</div>
+<div class="special">🔴ความผิดร้ายแรงมาก : 3 ชั่วยาม สยาม</div>
+<div class="special">⚫ความผิดร้ายแรงเป็นพิเศษ : 7 ชั่วยาม สยาม</div>
+<p>เมื่อหมดอายุความ เจ้าหน้าที่และชาวเมือง จักต้องหยุด ตามล่า จับกุมหรือแจ้งข้อหาย้อนหลังใดๆแก่ผู้ต้องคดี ทว่าสามารถใช้เรื่องราวดำเนินสตอรี่แนว กล่าวถึงได้ตามปกติ</p>
+<div class="special table-title">ตารางโทษแนะนำสำหรับเจ้าหน้าที่</div>
+<div class="table-row table-head"><span>ระดับ</span><span>ค่าปรับ</span><span>จำคุก</span></div>
+<div class="table-row"><span>ความผิดเล็กน้อย</span><span>๕๐–๑๐๐ บาท</span><span>๕ นาที</span></div>
+<div class="table-row"><span>ความผิดทั่วไป</span><span>๑๐๐–๕๐๐ บาท</span><span>๕–๑๐ นาที</span></div>
+<div class="table-row"><span>ความผิดปานกลาง</span><span>๕๐๐–๑,๐๐๐ บาท</span><span>๑๐–๓๐ นาที</span></div>
+<div class="table-row"><span>ความผิดร้ายแรง</span><span>๑,๐๐๐–๓,๐๐๐ บาท</span><span>๓๐–๖๐ นาที</span></div>
+<div class="table-row"><span>ความผิดร้ายแรงเป็นพิเศษ</span><span>๓,๐๐๐–๕,๐๐๐ บาท</span><span>เกิน ๖๐ นาที + ทัณฑสถาน</span></div></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 16 —</span></div>
+</article><article class="page" data-index="15">
+  <div class="paper-header"><span>แคว้นประจิมนฤเบศ</span><span>กฎหมายแห่งแคว้น · พ.ศ. ๒๔๗๕</span></div>
+  <div class="paper-content"><p>ประกาศ ณ วันที่ — พุทธศักราช ๒๔๗๕</p>
+<p>ด้วยพระบัญชาแห่งแคว้นประจิมนฤเบศ</p>
+<p>ลงชื่อ</p>
+<p>สิงห์ ณรงค์ฤทธิ์ หลวงวิชิตภักดี</p>
+<p>เจ้าแคว้นประจิมนฤเบศ</p>
+<p>“กฎหมายมีไว้เพื่อคุ้มครองบ้านเมือง</p>
+<p>ผู้ใดอยู่ใต้แผ่นดินเดียวกัน พึงอยู่ใต้กฎหมายเดียวกัน”</p></div>
+  <div class="paper-footer"><span>ประกาศโดยพระบัญชาแห่งเจ้าแคว้นประจิมนฤเบศ</span><span>— 16 —</span></div>
+</article></div></div>
+<div class="progress"><i id="bar" style="width:6.666666666666667%"></i></div>
+<div class="controls"><button class="nav" id="prev">‹ หน้าก่อน</button><button class="nav" id="next">หน้าถัดไป ›</button></div>
+<div class="hint">ใช้ปุ่มด้านล่าง, สารบัญด้านซ้าย หรือกด ← / → บนแป้นพิมพ์เพื่อพลิกหน้า</div>
+</main></div>
+<script>
+const pages=[...document.querySelectorAll('.page')];
+const toc=[...document.querySelectorAll('.toc-item')];
+let current=0;
+// รับคำสั่งพลิกหน้าได้ต่อเนื่อง โดยไม่ต้องรออนิเมชันก่อนหน้าจบ
+let turnQueue=[];
+let queueRunning=false;
+const TURN_STAGGER=190; // ระยะห่างระหว่างการเริ่มอนิเมชันแต่ละหน้า
+
+const thai=n=>String(n).replace(/\d/g,d=>"๐๑๒๓๔๕๖๗๘๙"[d]);
+function fitPageContent(page){
+  const content=page.querySelector(".paper-content");
+  if(!content) return;
+  // ไม่บีบฟอนต์เพื่อยัดเนื้อหาให้หมดหน้า — ให้เลื่อนอ่านภายในหน้ากระดาษแทน
+  content.style.fontSize="";
+  content.style.lineHeight="";
+}
+function fitAllPages(){pages.forEach(fitPageContent);}
+
+function render(){
+  pages.forEach((p,i)=>{
+    p.classList.toggle('flipped',i<current);
+    p.style.zIndex=i<current?i+1:pages.length-i;
+  });
+  document.getElementById('counter').textContent=`หน้า ${thai(current+1)} / ${thai(pages.length)}`;
+  document.getElementById('bar').style.width=((current+1)/pages.length*100)+'%';
+  document.getElementById('prev').disabled=current===0;
+  document.getElementById('next').disabled=current===pages.length-1;
+  toc.forEach(x=>x.classList.toggle('active',Number(x.dataset.page)===current+1));
+}
+function playFlip(page, direction){
+  if(!page) return;
+  page.classList.remove('turning-next','turning-prev','jump-flash');
+  void page.offsetWidth; // บังคับ reflow เพื่อให้อนิเมชันทำงานทุกครั้ง แม้เป็นหน้า 1-8
+  page.classList.add(direction==='next'?'turning-next':'turning-prev');
+  setTimeout(()=>page.classList.remove('turning-next','turning-prev'),840);
+}
+function startTurn(delta){
+  const next=current+delta;
+  if(next<0||next>=pages.length) return false;
+
+  // อัปเดตสถานะทันที เพื่อให้คำสั่งถัดไปเริ่มต่อจากหน้าที่ผู้ใช้กดล่าสุดได้เลย
+  const turningPage = delta>0 ? pages[current] : pages[next];
+  if(delta>0) turningPage.classList.add('flipping-out');
+  else turningPage.classList.remove('flipped');
+
+  playFlip(turningPage,delta>0?'next':'prev');
+  current=next;
+  render();
+
+  setTimeout(()=>{
+    turningPage.classList.remove('flipping-out');
+  },850);
+  return true;
+}
+
+function processTurnQueue(){
+  if(queueRunning || !turnQueue.length) return;
+  queueRunning=true;
+
+  const runNext=()=>{
+    if(!turnQueue.length){
+      queueRunning=false;
+      return;
+    }
+    const delta=turnQueue.shift();
+    // ถ้ามีการกดค้าง/รัวจนถึงขอบ ให้ข้ามเฉพาะคำสั่งที่ไปต่อไม่ได้
+    startTurn(delta);
+    setTimeout(runNext,TURN_STAGGER);
+  };
+  runNext();
+}
+
+function turn(delta){
+  // ไม่ล็อกปุ่มระหว่าง animation: กดต่อได้ทันที และแต่ละหน้าจะมีชั้น/อนิเมชันของตัวเอง
+  const projected=current+turnQueue.reduce((sum,d)=>sum+d,0)+delta;
+  if(projected<0||projected>=pages.length) return;
+  turnQueue.push(delta);
+  processTurnQueue();
+}
+function goToPage(n){
+  n=Math.max(1,Math.min(pages.length,Number(n)));
+  const target=n-1;
+  if(target===current) return;
+
+  // สารบัญเป็นการกระโดดตรง: ไม่ไล่พลิกผ่านหน้าระหว่างทาง
+  turnQueue=[];
+  queueRunning=false;
+  const previous=pages[current];
+  const targetPage=pages[target];
+  if(!targetPage) return;
+
+  pages.forEach((p,i)=>{
+    p.classList.remove('turning-next','turning-prev','jump-flash');
+    p.classList.toggle('flipped',i<target);
+    p.style.zIndex=i<target?i+1:pages.length-i;
+  });
+  current=target;
+  render();
+
+  // ให้หน้าที่เลือกมี animation สั้น ๆ โดยไม่แสดงหน้ากลางระหว่างทาง
+  targetPage.classList.remove('jump-flash');
+  void targetPage.offsetWidth;
+  targetPage.classList.add('jump-flash');
+  setTimeout(()=>targetPage.classList.remove('jump-flash'),360);
+}
+const app=document.getElementById('app');
+const tocToggle=document.getElementById('tocToggle');
+const TOC_KEY='lawbook-toc-collapsed';
+function setTocCollapsed(collapsed){
+  app.classList.toggle('toc-collapsed',collapsed);
+  tocToggle.textContent=collapsed?'☰':'‹';
+  tocToggle.title=collapsed?'เปิดสารบัญ':'ปิดสารบัญ';
+  tocToggle.setAttribute('aria-label',tocToggle.title);
+  localStorage.setItem(TOC_KEY,collapsed?'1':'0');
+}
+tocToggle.addEventListener('click',()=>setTocCollapsed(!app.classList.contains('toc-collapsed')));
+if(localStorage.getItem(TOC_KEY)==='1') setTocCollapsed(true);
+
+document.getElementById('next').addEventListener('click',()=>turn(1));
+document.getElementById('prev').addEventListener('click',()=>turn(-1));
+toc.forEach(x=>x.addEventListener('click',()=>goToPage(x.dataset.page)));
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('.paper-content')) return;
+  if(e.key==='ArrowRight'||e.key==='PageDown')turn(1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')turn(-1);
+});
+fitAllPages();
+render();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); }, true);
+  document.addEventListener('selectstart', function(e){ e.preventDefault(); }, true);
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); }, true);
+  document.addEventListener('copy', function(e){ e.preventDefault(); e.clipboardData && e.clipboardData.setData('text/plain',''); }, true);
+  document.addEventListener('cut', function(e){ e.preventDefault(); }, true);
+  document.addEventListener('keydown', function(e){
+    if ((e.ctrlKey || e.metaKey) && ['c','x','a','u','s'].includes(e.key.toLowerCase())) e.preventDefault();
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase()))) e.preventDefault();
+  }, true);
+})();
+</script>
+</body></html>
